@@ -1,32 +1,19 @@
 #!/usr/bin/env python3
 
-import os
-import time
-import sys
 import signal
-import time
 import curses
 
 from car import Car
+from logger import Logger
 
 
-class Logger:
-    def __init__(self, stdscr):
-        self.stdscr = stdscr
+class App:
+    def __init__(self, window):
+        self.window = window
+        self.window.nodelay(True)
+        self.window.clear()
 
-    def log(self, str):
-        self.stdscr.insertln()
-        self.stdscr.addstr(0, 0, str)
-        self.stdscr.refresh()
-
-
-class Window:
-    def __init__(self, stdscr):
-        self.stdscr = stdscr
-        self.stdscr.nodelay(True)
-        self.stdscr.clear()
-
-        self.logger = Logger(self.stdscr)
+        self.logger = Logger(self.window)
         self.car = Car(self.logger)
         self.done = False
 
@@ -51,7 +38,7 @@ class Window:
                     direction = "left"
                 elif key == curses.KEY_RIGHT:
                     direction = "right"
-                key = self.stdscr.getch()
+                key = self.window.getch()
 
             # take action
             if direction == "forward":
@@ -70,4 +57,4 @@ class Window:
         self.car.stop()
 
 
-curses.wrapper(lambda w: Window(w).main())
+curses.wrapper(lambda w: App(w).main())
