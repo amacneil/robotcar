@@ -53,17 +53,17 @@ class Car:
         self.move(1, -1, 1, -1, MOVE_DURATION)
 
     def move(self, lf, rf, lr, rr, duration):
-        orig_lf = self.kit.motor1.throttle
-        orig_rf = self.kit.motor2.throttle
-        orig_lr = self.kit.motor3.throttle
-        orig_rr = self.kit.motor4.throttle
+        orig_lf = self.kit.motor3.throttle
+        orig_rf = self.kit.motor4.throttle
+        orig_lr = self.kit.motor1.throttle
+        orig_rr = self.kit.motor2.throttle
 
         self.set_throttle(lf, rf, lr, rr)
         time.sleep(duration)
         self.set_throttle(orig_lf, orig_rf, orig_lr, orig_rr)
 
     def set_throttle(self, lf, rf, lr, rr):
-        self.kit.motor1.throttle = lf
-        self.kit.motor2.throttle = rf
-        self.kit.motor3.throttle = lr
-        self.kit.motor4.throttle = rr
+        self.kit.motor3.throttle = lf
+        self.kit.motor4.throttle = rf
+        self.kit.motor1.throttle = lr
+        self.kit.motor2.throttle = rr
